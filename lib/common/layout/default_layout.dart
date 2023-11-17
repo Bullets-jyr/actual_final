@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class DefaultLayout extends StatelessWidget {
   final Color? backgroundColor;
   final Widget child;
-  // final String? title;
-  // final Widget? bottomNavigationBar;
+  final String? title;
+  final Widget? bottomNavigationBar;
   // final Widget? floatingActionButton;
 
   const DefaultLayout({
     required this.child,
     this.backgroundColor,
-    // this.title,
-    // this.bottomNavigationBar,
+    this.title,
+    this.bottomNavigationBar,
     // this.floatingActionButton,
     Key? key,
   }) : super(key: key);
@@ -20,29 +20,29 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
-      // appBar: renderAppBar(),
+      appBar: renderAppBar(),
       body: child,
-      // bottomNavigationBar: bottomNavigationBar,
+      bottomNavigationBar: bottomNavigationBar,
       // floatingActionButton: floatingActionButton,
     );
   }
 
-  // AppBar? renderAppBar(){
-  //   if(title == null){
-  //     return null;
-  //   }else{
-  //     return AppBar(
-  //       backgroundColor: Colors.white,
-  //       elevation: 0,
-  //       title: Text(
-  //         title!,
-  //         style: TextStyle(
-  //           fontSize: 16.0,
-  //           fontWeight: FontWeight.w500,
-  //         ),
-  //       ),
-  //       foregroundColor: Colors.black,
-  //     );
-  //   }
-  // }
+  AppBar? renderAppBar(){
+    if(title == null){
+      return null;
+    }else{
+      return AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: Text(
+          title!,
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        foregroundColor: Colors.black,
+      );
+    }
+  }
 }
