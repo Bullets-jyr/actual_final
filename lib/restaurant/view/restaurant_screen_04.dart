@@ -1,6 +1,7 @@
 import 'package:actual_final/common/const/data.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
 import 'package:actual_final/restaurant/model/restaurant_model.dart';
+import 'package:actual_final/restaurant/model/restaurant_model_04.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -41,12 +42,12 @@ class RestaurantScreen04 extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   final item = snapshot.data![index];
-                  final pItem = RestaurantModel.fromJson(
+                  final pItem = RestaurantModel04.fromJson(
                     json: item,
                   );
 
                   return RestaurantCard.fromModel(
-                    model: pItem,
+                    model: pItem as RestaurantModel,
                   );
                 },
                 separatorBuilder: (_, index) {

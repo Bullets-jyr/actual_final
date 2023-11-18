@@ -1,5 +1,4 @@
 import 'package:actual_final/common/const/data.dart';
-import 'package:actual_final/common/dio/dio.dart';
 import 'package:actual_final/common/layout/default_layout.dart';
 import 'package:actual_final/product/component/product_card.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
@@ -9,10 +8,10 @@ import 'package:actual_final/restaurant/repository/restaurant_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantDetailScreen extends StatelessWidget {
+class RestaurantDetailScreen06 extends StatelessWidget {
   final String id;
 
-  const RestaurantDetailScreen({
+  const RestaurantDetailScreen06({
     required this.id,
     super.key,
   });
@@ -20,13 +19,8 @@ class RestaurantDetailScreen extends StatelessWidget {
   Future<RestaurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
 
-    dio.interceptors.add(
-      CustomInterceptor(
-        storage: storage,
-      ),
-    );
-
-    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+    final repository =
+        RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
 
     return repository.getRestaurantDetail(id: id);
   }

@@ -7,8 +7,8 @@ import 'package:actual_final/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantScreen extends StatelessWidget {
-  const RestaurantScreen({super.key});
+class RestaurantScreen06 extends StatelessWidget {
+  const RestaurantScreen06({super.key});
 
   Future<List<RestaurantModel>> paginateRestaurant() async {
     final dio = Dio();

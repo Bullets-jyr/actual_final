@@ -1,27 +1,26 @@
 import 'package:actual_final/common/const/data.dart';
-import 'package:actual_final/common/dio/dio.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
 import 'package:actual_final/restaurant/model/restaurant_model.dart';
-import 'package:actual_final/restaurant/repository/restaurant_repository.dart';
 import 'package:actual_final/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantScreen extends StatelessWidget {
-  const RestaurantScreen({super.key});
+class RestaurantScreen05 extends StatelessWidget {
+  const RestaurantScreen05({super.key});
 
-  Future<List<RestaurantModel>> paginateRestaurant() async {
+  Future<List> paginateRestaurant() async {
     final dio = Dio();
 
-    dio.interceptors.add(
-      CustomInterceptor(
-        storage: storage,
-      ),
+    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+    final resp = await dio.get(
+      'http://$ip/restaurant',
+      options: Options(headers: {
+        'authorization': 'Bearer $accessToken',
+      }),
     );
 
-    final resp = await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant').paginate();
-
-    return resp.data;
+    return resp.data['data'];
   }
 
   @override
@@ -30,9 +29,9 @@ class RestaurantScreen extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: FutureBuilder<List<RestaurantModel>>(
+          child: FutureBuilder<List>(
             future: paginateRestaurant(),
-            builder: (context, AsyncSnapshot<List<RestaurantModel>> snapshot) {
+            builder: (context, AsyncSnapshot<List> snapshot) {
               print(snapshot.error);
               print(snapshot.data);
               if (!snapshot.hasData) {
@@ -44,7 +43,10 @@ class RestaurantScreen extends StatelessWidget {
               return ListView.separated(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
-                  final pItem = snapshot.data![index];
+                  final item = snapshot.data![index];
+                  final pItem = RestaurantModel.fromJson(
+                    item,
+                  );
 
                   return GestureDetector(
                     onTap: () {
