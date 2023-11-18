@@ -1,11 +1,10 @@
 import 'package:actual_final/common/const/data.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
-import 'package:actual_final/restaurant/model/restaurant_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantScreen extends StatelessWidget {
-  const RestaurantScreen({super.key});
+class RestaurantScreen01 extends StatelessWidget {
+  const RestaurantScreen01({super.key});
 
   Future<List> paginateRestaurant() async {
     final dio = Dio();
@@ -41,12 +40,23 @@ class RestaurantScreen extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   final item = snapshot.data![index];
-                  final pItem = RestaurantModel.fromJson(
-                    json: item,
-                  );
-
-                  return RestaurantCard.fromModel(
-                    model: pItem,
+                  return RestaurantCard(
+                    image: Image.network(
+                      'http://$ip${item['thumbUrl']}',
+                      fit: BoxFit.cover,
+                    ),
+                    // image: Image.asset(
+                    //   'asset/img/food/ddeok_bok_gi.jpg',
+                    //   fit: BoxFit.cover,
+                    // ),
+                    name: item['name'],
+                    // type 'List<dynamic>' is not a subtype of type 'List<String>'
+                    // tags: item['tags'],
+                    tags: List<String>.from(item['tags']),
+                    ratingsCount: item['ratingsCount'],
+                    deliveryTime: item['deliveryTime'],
+                    deliveryFee: item['deliveryFee'],
+                    ratings: item['ratings'],
                   );
                 },
                 separatorBuilder: (_, index) {

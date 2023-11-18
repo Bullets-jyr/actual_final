@@ -4,8 +4,8 @@ import 'package:actual_final/restaurant/model/restaurant_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantScreen extends StatelessWidget {
-  const RestaurantScreen({super.key});
+class RestaurantScreen03 extends StatelessWidget {
+  const RestaurantScreen03({super.key});
 
   Future<List> paginateRestaurant() async {
     final dio = Dio();
@@ -45,8 +45,23 @@ class RestaurantScreen extends StatelessWidget {
                     json: item,
                   );
 
-                  return RestaurantCard.fromModel(
-                    model: pItem,
+                  return RestaurantCard(
+                    image: Image.network(
+                      pItem.thumbUrl,
+                      fit: BoxFit.cover,
+                    ),
+                    // image: Image.asset(
+                    //   'asset/img/food/ddeok_bok_gi.jpg',
+                    //   fit: BoxFit.cover,
+                    // ),
+                    name: pItem.name,
+                    // type 'List<dynamic>' is not a subtype of type 'List<String>'
+                    // tags: item['tags'],
+                    tags: pItem.tags,
+                    ratingsCount: pItem.ratingsCount,
+                    deliveryTime: pItem.deliveryTime,
+                    deliveryFee: pItem.deliveryFee,
+                    ratings: pItem.ratings,
                   );
                 },
                 separatorBuilder: (_, index) {

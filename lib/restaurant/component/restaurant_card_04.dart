@@ -2,7 +2,7 @@ import 'package:actual_final/common/const/colors.dart';
 import 'package:actual_final/restaurant/model/restaurant_model.dart';
 import 'package:flutter/material.dart';
 
-class RestaurantCard extends StatelessWidget {
+class RestaurantCard04 extends StatelessWidget {
   // 이미지
   final Widget image;
 
@@ -33,7 +33,7 @@ class RestaurantCard extends StatelessWidget {
   // 상세 내용
   // final String? detail;
 
-  const RestaurantCard({
+  const RestaurantCard04({
     required this.image,
     required this.name,
     required this.tags,
@@ -44,11 +44,11 @@ class RestaurantCard extends StatelessWidget {
     super.key,
   });
 
-  factory RestaurantCard.fromModel({
+  factory RestaurantCard04.fromModel({
     required RestaurantModel model,
     // bool isDetail = false,
   }) {
-    return RestaurantCard(
+    return RestaurantCard04(
       image: Image.network(
         model.thumbUrl,
         fit: BoxFit.cover,
