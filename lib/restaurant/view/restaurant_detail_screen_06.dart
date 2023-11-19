@@ -1,6 +1,7 @@
 import 'package:actual_final/common/const/data.dart';
 import 'package:actual_final/common/layout/default_layout.dart';
 import 'package:actual_final/product/component/product_card.dart';
+import 'package:actual_final/product/component/product_card_11.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
 import 'package:actual_final/restaurant/model/restaurant_detail_model.dart';
 import 'package:actual_final/restaurant/model/restaurant_model.dart';
@@ -86,7 +87,7 @@ class RestaurantDetailScreen06 extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: ProductCard.fromModel(model: model),
+              child: ProductCard11.fromModel(model: model),
             );
           },
           childCount: products.length,

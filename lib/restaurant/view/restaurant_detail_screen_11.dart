@@ -2,6 +2,7 @@ import 'package:actual_final/common/layout/default_layout.dart';
 import 'package:actual_final/common/model/cursor_pagination_model.dart';
 import 'package:actual_final/common/utils/pagination_utils.dart';
 import 'package:actual_final/product/component/product_card.dart';
+import 'package:actual_final/product/component/product_card_11.dart';
 import 'package:actual_final/rating/component/rating_card.dart';
 import 'package:actual_final/rating/model/rating_model.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
@@ -14,21 +15,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletons/skeletons.dart';
 
-class RestaurantDetailScreen extends ConsumerStatefulWidget {
+class RestaurantDetailScreen11 extends ConsumerStatefulWidget {
   final String id;
 
-  const RestaurantDetailScreen({
+  const RestaurantDetailScreen11({
     required this.id,
     super.key,
   });
 
   @override
-  ConsumerState<RestaurantDetailScreen> createState() =>
+  ConsumerState<RestaurantDetailScreen11> createState() =>
       _RestaurantDetailScreenState();
 }
 
-class _RestaurantDetailScreenState
-    extends ConsumerState<RestaurantDetailScreen> {
+class _RestaurantDetailScreenState extends ConsumerState<RestaurantDetailScreen11> {
   final ScrollController controller = ScrollController();
 
   @override
@@ -104,7 +104,7 @@ class _RestaurantDetailScreenState
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (_, index) => Padding(
+              (_, index) => Padding(
             padding: const EdgeInsets.only(bottom: 16.0),
             child: RatingCard.fromModel(
               model: models[index],
@@ -168,7 +168,7 @@ class _RestaurantDetailScreenState
 
             return Padding(
               padding: const EdgeInsets.only(top: 16.0),
-              child: ProductCard.fromRestaurantProductModel(model: model),
+              child: ProductCard11.fromModel(model: model),
             );
           },
           childCount: products.length,
