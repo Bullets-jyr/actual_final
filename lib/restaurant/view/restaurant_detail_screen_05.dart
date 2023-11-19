@@ -104,7 +104,7 @@ class RestaurantDetailScreen05 extends StatelessWidget {
   }
 
   SliverToBoxAdapter renderTop({
-    required RestaurantModel model,
+    required RestaurantDetailModel model,
   }) {
     return SliverToBoxAdapter(
       child: RestaurantCard.fromModel(
