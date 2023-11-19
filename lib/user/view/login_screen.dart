@@ -7,12 +7,16 @@ import 'package:actual_final/common/const/data.dart';
 import 'package:actual_final/common/layout/default_layout.dart';
 import 'package:actual_final/common/secure_storage/secure_storage.dart';
 import 'package:actual_final/common/view/root_tab.dart';
+import 'package:actual_final/user/model/user_model.dart';
+import 'package:actual_final/user/provider/user_me_provider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'login';
+
   const LoginScreen({super.key});
 
   @override
@@ -25,7 +29,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dio = Dio();
+    // final dio = Dio();
+    final state = ref.watch(userMeProvider);
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -61,38 +66,45 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: () async {
+                  onPressed: state is UserModelLoading
+                      ? null
+                      : () async {
+                    ref.read(userMeProvider.notifier).login(
+                      username: username,
+                      password: password,
+                    );
+
                     // ID:비밀번호
-                    final rawString = '$username:$password';
-
-                    print(rawString);
-
-                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
-
-                    String token = stringToBase64.encode(rawString);
-
-                    final resp = await dio.post(
-                      'http://$ip/auth/login',
-                      options: Options(headers: {
-                        'authorization': 'Basic $token',
-                      }),
-                    );
-
-                    final refreshToken = resp.data['refreshToken'];
-                    final accessToken = resp.data['accessToken'];
-
-                    final storage = ref.read(secureStorageProvider);
-
-                    await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
-                    await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
-
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => RootTab(),
-                      ),
-                    );
-
-                    print(resp.data);
+                    // final rawString = '$username:$password';
+                    //
+                    // print(rawString);
+                    //
+                    // Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                    //
+                    // String token = stringToBase64.encode(rawString);
+                    //
+                    // final resp = await dio.post(
+                    //   'http://$ip/auth/login',
+                    //   options: Options(headers: {
+                    //     'authorization': 'Basic $token',
+                    //   }),
+                    // );
+                    //
+                    // final refreshToken = resp.data['refreshToken'];
+                    // final accessToken = resp.data['accessToken'];
+                    //
+                    // final storage = ref.read(secureStorageProvider);
+                    //
+                    // await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    // await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+                    //
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(
+                    //     builder: (_) => RootTab(),
+                    //   ),
+                    // );
+                    //
+                    // print(resp.data);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: PRIMARY_COLOR,

@@ -16,11 +16,11 @@ class RestaurantScreen06 extends StatelessWidget {
 
     final storage = FlutterSecureStorage();
 
-    dio.interceptors.add(
-      CustomInterceptor(
-        storage: storage,
-      ),
-    );
+    // dio.interceptors.add(
+    //   CustomInterceptor(
+    //     storage: storage,
+    //   ),
+    // );
 
     final resp = await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant').paginate();
 
