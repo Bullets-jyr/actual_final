@@ -8,22 +8,22 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 
-part 'restaurant_repository.g.dart';
+part 'restaurant_repository_09.g.dart';
 
-final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
+final restaurantRepository09Provider = Provider<RestaurantRepository09>((ref) {
     final dio = ref.watch(dioProvider);
 
-    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+    final repository = RestaurantRepository09(dio, baseUrl: 'http://$ip/restaurant');
 
     return repository;
   },
 );
 
 @RestApi()
-abstract class RestaurantRepository {
+abstract class RestaurantRepository09 {
   // http://$ip/restaurant
-  factory RestaurantRepository(Dio dio, {String baseUrl}) =
-      _RestaurantRepository;
+  factory RestaurantRepository09(Dio dio, {String baseUrl}) =
+      _RestaurantRepository09;
 
   // http://$ip/restaurant/
   @GET('/')

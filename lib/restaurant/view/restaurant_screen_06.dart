@@ -6,12 +6,15 @@ import 'package:actual_final/restaurant/repository/restaurant_repository.dart';
 import 'package:actual_final/restaurant/view/restaurant_detail_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RestaurantScreen06 extends StatelessWidget {
   const RestaurantScreen06({super.key});
 
   Future<List<RestaurantModel>> paginateRestaurant() async {
     final dio = Dio();
+
+    final storage = FlutterSecureStorage();
 
     dio.interceptors.add(
       CustomInterceptor(

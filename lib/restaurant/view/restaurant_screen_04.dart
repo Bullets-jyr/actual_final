@@ -4,12 +4,15 @@ import 'package:actual_final/restaurant/model/restaurant_model.dart';
 import 'package:actual_final/restaurant/model/restaurant_model_04.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RestaurantScreen04 extends StatelessWidget {
   const RestaurantScreen04({super.key});
 
   Future<List> paginateRestaurant() async {
     final dio = Dio();
+
+    final storage = FlutterSecureStorage();
 
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
