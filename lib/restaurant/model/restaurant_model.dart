@@ -1,4 +1,5 @@
 import 'package:actual_final/common/const/data.dart';
+import 'package:actual_final/common/model/model_with_id.dart';
 import 'package:actual_final/common/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,7 +14,7 @@ enum RestaurantPriceRange {
 // flutter pub run build_runner build
 // flutter pub run build_runner watch
 @JsonSerializable()
-class RestaurantModel {
+class RestaurantModel implements IModelWithId {
   // {
   //   "id": "5ac83bfb-f2b5-55f4-be3c-564be3f01a5b",
   //   "name": "불타는 떡볶이",
