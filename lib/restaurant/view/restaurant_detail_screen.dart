@@ -1,7 +1,9 @@
+import 'package:actual_final/common/const/colors.dart';
 import 'package:actual_final/common/layout/default_layout.dart';
 import 'package:actual_final/common/model/cursor_pagination_model.dart';
 import 'package:actual_final/common/utils/pagination_utils.dart';
 import 'package:actual_final/product/component/product_card.dart';
+import 'package:actual_final/product/model/product_model.dart';
 import 'package:actual_final/rating/component/rating_card.dart';
 import 'package:actual_final/rating/model/rating_model.dart';
 import 'package:actual_final/restaurant/component/restaurant_card.dart';
@@ -10,6 +12,8 @@ import 'package:actual_final/restaurant/model/restaurant_model.dart';
 import 'package:actual_final/restaurant/provider/restaurant_provider.dart';
 import 'package:actual_final/restaurant/provider/restaurant_rating_provider.dart';
 import 'package:actual_final/restaurant/repository/restaurant_repository.dart';
+import 'package:actual_final/user/provider/basket_provider.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:skeletons/skeletons.dart';
@@ -53,6 +57,7 @@ class _RestaurantDetailScreenState
   Widget build(BuildContext context) {
     final state = ref.watch(restaurantDetailProvider(widget.id));
     final ratingsState = ref.watch(restaurantRatingProvider(widget.id));
+    final basket = ref.watch(basketProvider);
 
     print(ratingsState);
 
@@ -66,6 +71,30 @@ class _RestaurantDetailScreenState
 
     return DefaultLayout(
       title: '불타는 떡볶이',
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // context.pushNamed(BasketScreen.routeName);
+        },
+        backgroundColor: PRIMARY_COLOR,
+        child: badges.Badge(
+          showBadge: basket.isNotEmpty,
+          badgeContent: Text(
+            // 초기값, 기존값, 다음값
+            basket.fold<int>(0, (previous, next) => previous + next.count,).toString(),
+            style: TextStyle(
+              color: PRIMARY_COLOR,
+              fontSize: 10.0,
+            ),
+          ),
+          badgeStyle: badges.BadgeStyle(
+            badgeColor: Colors.white,
+          ),
+          // badgeColor: Colors.white,
+          child: Icon(
+            Icons.shopping_basket_outlined,
+          ),
+        ),
+      ),
       child: CustomScrollView(
         controller: controller,
         slivers: [
@@ -77,6 +106,7 @@ class _RestaurantDetailScreenState
           if (state is RestaurantDetailModel)
             renderProducts(
               products: state.products,
+              restaurant: state,
             ),
           if (ratingsState is CursorPagination<RatingModel>)
             renderRatings(
@@ -159,6 +189,7 @@ class _RestaurantDetailScreenState
   }
 
   SliverPadding renderProducts({
+    required RestaurantModel restaurant,
     required List<RestaurantProductModel> products,
   }) {
     return SliverPadding(
@@ -168,9 +199,25 @@ class _RestaurantDetailScreenState
           (context, index) {
             final model = products[index];
 
-            return Padding(
-              padding: const EdgeInsets.only(top: 16.0),
-              child: ProductCard.fromRestaurantProductModel(model: model),
+            // InkWel: UI 피드백 O
+            // GesturDetector: UI 피드백 X
+            return InkWell(
+              onTap: () {
+                ref.read(basketProvider.notifier).addToBasket(
+                  product: ProductModel(
+                    id: model.id,
+                    name: model.name,
+                    detail: model.detail,
+                    imgUrl: model.imgUrl,
+                    price: model.price,
+                    restaurant: restaurant,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ProductCard.fromRestaurantProductModel(model: model),
+              ),
             );
           },
           childCount: products.length,

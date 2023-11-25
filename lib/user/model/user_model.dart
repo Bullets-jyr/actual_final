@@ -1,6 +1,8 @@
 import 'package:actual_final/common/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+// flutter pub run build_runner build
+// flutter pub run build_runner watch
 part 'user_model.g.dart';
 
 abstract class UserModelBase {}
